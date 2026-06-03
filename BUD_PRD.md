@@ -1,11 +1,11 @@
-# Trillion — AI Business Agent for MacTaverne
+# Bud — AI Business Agent for MacTaverne
 **Product Requirements Document + Claude Build Prompt**
 
 ---
 
 ## Vision
 
-Trillion is a voice-first AI agent that lives permanently on your Mac. She has a name, a voice, and a persistent memory of everything MacTaverne. She can see your screen, hear you speak, read and write your files, manage your calendar and email, check your Stripe revenue, and spin up autonomous sub-agents to complete multi-step business tasks — all without you leaving the apps you're already in.
+Bud is a voice-first AI agent that lives permanently on your Mac. She has a name, a voice, and a persistent memory of everything MacTaverne. She can see your screen, hear you speak, read and write your files, manage your calendar and email, check your Stripe revenue, and spin up autonomous sub-agents to complete multi-step business tasks — all without you leaving the apps you're already in.
 
 This is your personal operating system layer. Not a chatbot. An agent.
 
@@ -13,16 +13,16 @@ This is your personal operating system layer. Not a chatbot. An agent.
 
 ## The Build Prompt
 
-> Paste this entire section into Claude Code to begin building Trillion.
+> Paste this entire section into Claude Code to begin building Bud.
 
 ---
 
 ```
-You are building Trillion, a voice-first AI business agent that runs as a native macOS menu bar app for the user's company MacTaverne. 
+You are building Bud, a voice-first AI business agent that runs as a native macOS menu bar app for the user's company MacTaverne. 
 
-Trillion must:
+Bud must:
 - Live in the macOS menu bar (no Dock icon)
-- Be always-on and voice-activated (push-to-talk: ctrl+option, or always-on wake word "Hey Trillion")
+- Be always-on and voice-activated (push-to-talk: ctrl+option, or always-on wake word "Hey Bud")
 - See the user's screen at all times using ScreenCaptureKit
 - Speak back using ElevenLabs TTS (voice ID to be configured)
 - Transcribe speech using Deepgram real-time WebSocket streaming
@@ -38,9 +38,9 @@ Build this as a Swift/SwiftUI macOS app (macOS 14.2+, Xcode 15+) with a Node.js/
 
 ARCHITECTURE
 
-├── trillion-app/                    # Swift/SwiftUI macOS app
+├── bud-app/                    # Swift/SwiftUI macOS app
 │   ├── Core/
-│   │   ├── TrillionAgent.swift       # Main agent coordinator (@MainActor ObservableObject)
+│   │   ├── BudAgent.swift       # Main agent coordinator (@MainActor ObservableObject)
 │   │   ├── ScreenWatcher.swift       # ScreenCaptureKit screen capture + base64 encoding
 │   │   ├── VoiceEngine.swift         # Deepgram WebSocket STT + ElevenLabs TTS orchestration
 │   │   ├── MemoryStore.swift         # SQLite persistent memory (GRDB or raw sqlite3)
@@ -57,7 +57,7 @@ ARCHITECTURE
 │   └── Worker/                      # Cloudflare Worker proxy
 │       ├── src/index.ts
 │       └── wrangler.toml
-└── trillion-memory.db               # Persistent SQLite at ~/Library/Application Support/Trillion/
+└── bud-memory.db               # Persistent SQLite at ~/Library/Application Support/Bud/
 
 ---
 
@@ -107,7 +107,7 @@ CORE FEATURES TO BUILD (in order)
    - Tables: conversations, facts, tasks, files_indexed
    - Auto-extract facts from conversations: "User's Stripe MRR is $X", "MacTaverne has Y customers"
    - Semantic search over memory using local embeddings (or keyword search fallback)
-   - Trillion remembers what you told her last week
+   - Bud remembers what you told her last week
 
 8. File system agent
    - Read any file: text, PDF (via PDFKit), images, Word/Excel (via QuickLook text extraction)
@@ -115,7 +115,7 @@ CORE FEATURES TO BUILD (in order)
    - Search files by name or content: "Find all invoices from last month"
    - Organize: "Move all PDFs in Downloads to ~/Documents/MacTaverne/Invoices/"
    - Watch directories for changes (FSEvents)
-   - Trillion can draft documents and save them directly
+   - Bud can draft documents and save them directly
 
 ---
 
@@ -148,7 +148,7 @@ CORE FEATURES TO BUILD (in order)
 
 12. SubAgentRunner — background autonomous task queue
     - User says: "Research the 5 best venues in Montreal for corporate events and put a summary in my Documents folder"
-    - Trillion creates a SubAgent task, runs it in background (using Claude + web search tool)
+    - Bud creates a SubAgent task, runs it in background (using Claude + web search tool)
     - Notifies user when complete
     - Each sub-agent has: name, goal, tools available, max_steps, timeout
     - Sub-agent tools: web_search, read_file, write_file, send_email (with confirmation), calendar_create
@@ -179,10 +179,10 @@ Secrets (wrangler secret put):
 
 ---
 
-SYSTEM PROMPT FOR TRILLION
+SYSTEM PROMPT FOR BUD
 
 ```
-You are Trillion, a voice-first AI business agent for MacTaverne, owned by Timothy Robertson.
+You are Bud, a voice-first AI business agent for MacTaverne, owned by Timothy Robertson.
 
 You live on Timothy's Mac as a menu bar assistant. You can see his screen, hear him speak, read and write his files, access his calendar, email, and Stripe revenue.
 
@@ -228,7 +228,7 @@ EDGE CASES TO HANDLE
 - Claude rate limited → queue and retry after delay, notify user
 - Gmail/Calendar OAuth expired → trigger re-auth flow
 - File too large for Claude context → chunk it, summarize sections
-- User speaks while Trillion is speaking → interrupt and listen
+- User speaks while Bud is speaking → interrupt and listen
 - Sub-agent stuck → timeout at 5 minutes, notify user with partial results
 - Multiple simultaneous requests → queue, process in order, maintain context
 
@@ -241,11 +241,11 @@ SETUP INSTRUCTIONS TO INCLUDE IN README
 3. Install dependencies: cd worker && npm install
 4. Set secrets: wrangler secret put ANTHROPIC_API_KEY (+ others)
 5. Deploy worker: wrangler deploy
-6. Open trillion-app.xcodeproj in Xcode
+6. Open bud-app.xcodeproj in Xcode
 7. Set your Apple signing team
 8. Build & run (Cmd+R)
 9. Grant permissions when prompted
-10. Hold ctrl+option and say "Hey Trillion, what's on my calendar today?"
+10. Hold ctrl+option and say "Hey Bud, what's on my calendar today?"
 
 ---
 
@@ -281,6 +281,6 @@ After Phase 1 is complete and voice works end-to-end, check in with the user bef
 ## Files in This Repo
 
 - `install-heyclicky.sh` — install HeyClicky (free prototype, uses Gemini + Apple TTS/STT)
-- `TRILLION_PRD.md` — this document
+- `BUD_PRD.md` — this document
 
-HeyClicky is the proof-of-concept. Trillion is the full build.
+HeyClicky is the proof-of-concept. Bud is the full build.
