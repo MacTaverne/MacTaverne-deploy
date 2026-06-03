@@ -10,7 +10,7 @@ in the macOS menu bar. The owner is Timothy Robertson (info@mactaverne.ca).
 IMPORTANT DECISIONS (do not change these):
 - Stack: Electron + Node.js (NOT Swift, NOT HeyClicky)
 - IDE: VS Code (no Xcode required)
-- AI brain: Claude claude-sonnet-4-6 via Anthropic API
+- AI brain: Claude claude-opus-4-8 via Anthropic API
 - Voice out (TTS): macOS native `say` command via child_process → swappable later
 - Voice in (STT): OpenAI Whisper via node (local model, free)
 - Wake phrase: ctrl+option hold to talk, "Hey Bud" always-on detection
@@ -98,6 +98,7 @@ Current context injected each message:
 CLOUDFLARE WORKER (worker/src/index.ts):
 Single route: POST /chat → stream to Anthropic Messages API
 Include full SSE passthrough. Secret: ANTHROPIC_API_KEY.
+Model: claude-opus-4-8 with thinking: {type: "adaptive"} and effort: "xhigh" for agentic tasks.
 
 ---
 

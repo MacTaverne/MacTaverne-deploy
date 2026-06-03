@@ -8,7 +8,7 @@
 | Decision | Choice | Notes |
 |---|---|---|
 | Base | Fork HeyClicky | Keep screen awareness, overlay, push-to-talk scaffolding |
-| AI brain | Claude claude-sonnet-4-6 | Best reasoning for multi-step business tasks |
+| AI brain | Claude claude-opus-4-8 | Best reasoning for multi-step business tasks |
 | Voice out (TTS) | Apple TTS → swappable | Start free, upgrade to Kokoro/GitHub model any time |
 | Voice in (STT) | Apple Speech (on-device) | Free, real-time, no API key |
 | Wake phrase | "Hey Bud" + ctrl+option hold | Both modes active |
@@ -23,7 +23,7 @@ When complete, you hold ctrl+option (or say "Hey Bud") and Bud:
 
 1. **Hears you** via Apple Speech (real-time, on-device)
 2. **Sees your screen** via ScreenCaptureKit
-3. **Thinks** with Claude claude-sonnet-4-6
+3. **Thinks** with Claude claude-opus-4-8
 4. **Speaks back** via Apple TTS (Siri-quality voice, no API needed)
 5. **Remembers** context across sessions (local SQLite)
 6. **Lives in the menu bar** — no Dock icon, always available

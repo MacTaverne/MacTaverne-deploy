@@ -26,7 +26,7 @@ Bud must:
 - See the user's screen at all times using ScreenCaptureKit
 - Speak back using ElevenLabs TTS (voice ID to be configured)
 - Transcribe speech using Deepgram real-time WebSocket streaming
-- Use Claude claude-sonnet-4-6 via Anthropic API as the reasoning engine
+- Use Claude claude-opus-4-8 via Anthropic API as the reasoning engine
 - Maintain persistent memory across sessions (local SQLite)
 - Have full read/write access to the local file system
 - Connect to: Google Calendar, Gmail, Stripe
@@ -82,7 +82,7 @@ CORE FEATURES TO BUILD (in order)
    - Worker proxy endpoint: POST /transcribe-token → returns Deepgram temp token
 
 4. Claude API integration (streaming)
-   - Model: claude-sonnet-4-6
+   - Model: claude-opus-4-8
    - System prompt includes: current time, current frontmost app, screen description, user name, business context
    - Conversation history: last 20 exchanges in SQLite
    - Worker proxy endpoint: POST /chat → proxies to Anthropic
@@ -266,7 +266,7 @@ After Phase 1 is complete and voice works end-to-end, check in with the user bef
 
 | Layer | Tech | Cost |
 |---|---|---|
-| AI reasoning | Claude claude-sonnet-4-6 | ~$0.01–0.05/session |
+| AI reasoning | Claude claude-opus-4-8 | ~$0.05–0.25/session |
 | Voice → text | Deepgram Nova-3 | $0.0043/min (free 200h trial) |
 | Text → voice | ElevenLabs Flash v2.5 | $5/mo (Starter plan) |
 | API proxy | Cloudflare Workers | Free tier |
