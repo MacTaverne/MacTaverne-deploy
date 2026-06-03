@@ -120,13 +120,17 @@ Everything needed for a working "Hey Bud, what time is it?" demo.
 
 **Milestone**: "Hey Bud, what's MacTaverne's revenue this month?"
 
-#### 3c. Veloce POS
-- [ ] **Need to confirm**: Do you have API access from Veloce, or just the manager dashboard?
-- [ ] **Option A** (if API available): Direct REST calls to Veloce reporting endpoints
-- [ ] **Option B** (no API): Browser automation that reads from the Veloce web dashboard, authenticated with your credentials
-- [ ] Target data: daily sales, covers, top items, staff shifts
+#### 3c. Veloce POS ✓ Full API access confirmed
+- [ ] Locate Veloce API docs (user has credentials)
+- [ ] Auth: REST API with API key / credentials
+- [ ] Endpoints needed:
+  - Sales & revenue reports (daily revenue, sales by hour, table totals)
+  - Menu items & orders (what sold, quantities, top items)
+  - Historical reporting (end-of-day, weekly, monthly summaries)
+- [ ] Worker route: `POST /veloce` (proxy with Veloce credentials as secrets)
+- [ ] Store Veloce API key in Cloudflare Worker secrets (never in Swift binary)
 
-**Milestone**: "Hey Bud, how many covers did we do last night?"
+**Milestone**: "Hey Bud, what were our top 5 selling items last night?" / "How much did we gross this week vs last week?"
 
 ---
 
@@ -182,13 +186,14 @@ This determines whether it's a clean API integration or we need to use browser-b
 
 ---
 
-## What We Are NOT Building Yet
+## What We Are NOT Building Yet (Phase 1)
 
 - Mobile app (iPhone/iPad)
 - Multi-user / multi-device sync
 - Payments or financial actions via Stripe
-- Custom wake word training (using Apple's built-in "Hey Siri"-style, not custom)
-- Integration with MacTaverne OS web app (need more info on what this is)
+- Custom wake word model training
+- MacTaverne website / SEO integration (Google Search Console) — Phase 4
+- MacTaverne OS web app integration — scope TBD once web app is defined
 
 ---
 
